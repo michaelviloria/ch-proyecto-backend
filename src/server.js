@@ -9,7 +9,7 @@ app.use("/api/productos", routerProducts);
 import routerCart from "./routes/cart.routes.js";
 app.use("/api/carrito", routerCart);
 
-// <---------- Servidor ---------->
+// <---------- Servidor Error 404 ---------->
 
 function error404(req, res, next) {
 	console.log(req.url, req.method);
@@ -24,6 +24,12 @@ function error404(req, res, next) {
 }
 
 app.use(error404);
+
+// <---------- Servidor ---------->
+
+app.get("/", (req, res) => {
+	res.send("<h1>Primer entrega del proyecto</h1>");
+})
 
 // <---------- Servidor ---------->
 
