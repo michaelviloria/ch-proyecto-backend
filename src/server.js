@@ -1,6 +1,17 @@
 import express from "express";
 const app = express();
 
+// <---------- Mongoose ---------->
+
+import mongoose from "mongoose";
+
+const URL_MONGOOSE = "mongodb://localhost:27017/ecommerce";
+mongoose.connect(URL_MONGOOSE, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
+console.log("Base de datos conectada");
+
 // <---------- Routes ---------->
 
 import routerProducts from "./routes/products.routes.js";
@@ -12,7 +23,6 @@ app.use("/api/carrito", routerCart);
 // <---------- Servidor Error 404 ---------->
 
 function error404(req, res, next) {
-	console.log(req.url, req.method);
 	const message = {
 		error: 404,
 		descripcion: `ruta ${req.url} y metodo ${req.method} no estan implementados`,
@@ -29,7 +39,7 @@ app.use(error404);
 
 app.get("/", (req, res) => {
 	res.send("<h1>Primer entrega del proyecto</h1>");
-})
+});
 
 // <---------- Servidor ---------->
 

@@ -1,10 +1,22 @@
 import express from "express";
 const routerProduct = express.Router();
 
-import Product from "../product.js";
-const product = new Product("products.json");
+// <------ Container ------>
+
+// import Product from "../containers/product.js";
+// const product = new Product("products.json");
+
+// <------ Mongodb ------>
+
+import { productsModel } from "../models/products.schema.js";
+import ProductMongoDB from "../dao/productMongoDB.js";
+const product = new ProductMongoDB(productsModel);
+
+// <------ Controllers ------>
 
 import controller from "../controllers/admin.controller.js";
+
+// <------ Queries ------>
 
 routerProduct.use(express.json());
 routerProduct.use(express.urlencoded({ extended: true }));

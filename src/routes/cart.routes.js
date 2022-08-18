@@ -1,8 +1,18 @@
 import express from "express";
 const routerCart = express.Router();
 
-import Cart from "../cart.js";
-const cart = new Cart("carts.json");
+// <------ Container ------>
+
+// import Cart from "../cart.js";
+// const cart = new Cart("carts.json");
+
+// <------ Mongodb ------>
+
+import { cartsModel } from "../models/carts.schema.js";
+import CartMongoDB from "../dao/cartMongoDB.js";
+const cart = new CartMongoDB(cartsModel);
+
+// <------ Queries ------>
 
 routerCart.use(express.json());
 routerCart.use(express.urlencoded({ extended: true }));
