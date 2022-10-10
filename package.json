@@ -1,23 +1,33 @@
 {
-  "type": "module",
-  "name": "ch-proyecto-backend",
-  "version": "1.0.0",
-  "description": "Proyecto del curso 'Programación Backend' en CoderHouse",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
-  },
-  "keywords": [],
-  "author": "Michael Viloria",
-  "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^2.0.19"
-  },
-  "dependencies": {
-    "express": "^4.18.1",
-    "firebase-admin": "^11.0.1",
-    "mongoose": "^6.5.2"
-  }
+	"type": "module",
+	"name": "ch-proyecto-backend",
+	"version": "1.0.0",
+	"description": "Proyecto del curso 'Programación Backend' en CoderHouse",
+	"main": "server.js",
+	"scripts": {
+		"dev": "nodemon index.js",
+		"start": "node index.js",
+		"tailwind:css": "postcss public/styles/tailwind.css -o public/styles/style.css --watch"
+	},
+	"keywords": [],
+	"author": "Michael Viloria",
+	"license": "ISC",
+	"devDependencies": {
+		"autoprefixer": "^10.4.12",
+		"nodemon": "^2.0.19",
+		"postcss": "^8.4.17",
+		"postcss-cli": "^10.0.0",
+		"tailwindcss": "^3.1.8"
+	},
+	"dependencies": {
+		"bcrypt": "^5.1.0",
+		"cookie-parser": "^1.4.6",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.1",
+		"express-session": "^1.17.3",
+		"mongoose": "^6.5.2",
+		"passport": "^0.6.0",
+		"passport-local": "^1.0.0",
+		"pug": "^3.0.2"
+	}
 }

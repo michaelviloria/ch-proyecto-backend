@@ -1,62 +1,45 @@
 import express from "express";
-const app = express();
+import session from "express-session";
+import cookieParser from "cookie-parser";
+import passport from "passport";
+import { error404 } from "./middlewares/middlewares.js";
 
-// <---------- Mongoose ---------->
+export const app = express();
 
-// import mongoose from "mongoose";
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
-// const URL_MONGOOSE = "mongodb://localhost:27017/ecommerce";
-// mongoose.connect(URL_MONGOOSE, {
-// 	useNewUrlParser: true,
-// 	useUnifiedTopology: true,
-// });
-// console.log("Base de datos conectada");
+// <---------- Sessions ---------->
 
-// <---------- Firebase ---------->
+app.use(cookieParser("secret"));
+app.use(
+	session({
+		secret: "secret",
+		resave: false,
+		saveUninitialized: false,
+	})
+);
 
-import admin from "firebase-admin";
+app.use(passport.initialize());
+app.use(passport.session());
 
-import serviceAccount from "./proyecto-backend-ef2b4-firebase-adminsdk-rm655-9ebea6f677.json";
+// <---------- Engine Pug ---------->
 
-admin.initializeApp({
-	credential: admin.credential.cert(serviceAccount),
-});
+app.set("view engine", ".pug");
+app.set("views", "./src/views");
 
 // <---------- Routes ---------->
 
-import routerProducts from "./routes/products.routes.js";
-app.use("/api/productos", routerProducts);
+import { routerProduct } from "./routes/products.routes.js";
+app.use("/api/productos", routerProduct);
 
-import routerCart from "./routes/cart.routes.js";
+import { routerCart } from "./routes/cart.routes.js";
 app.use("/api/carrito", routerCart);
+
+import { router } from "./routes/routes.js";
+app.use(router);
 
 // <---------- Servidor Error 404 ---------->
 
-function error404(req, res, next) {
-	const message = {
-		error: 404,
-		descripcion: `ruta ${req.url} y metodo ${req.method} no estan implementados`,
-	};
-	if (req.url !== "/" || (req.url === "/" && req.method !== "GET")) {
-		res.status(404).json(message);
-	}
-	next();
-}
-
 app.use(error404);
-
-// <---------- Servidor ---------->
-
-app.get("/", (req, res) => {
-	res.send("<h1>Primer entrega del proyecto</h1>");
-});
-
-// <---------- Servidor ---------->
-
-const PORT = process.env.PORT || 8080;
-
-const server = app.listen(PORT, () => {
-	console.log(`Servidor HTTP escuchando en el puerto ${server.address().port}`);
-});
-
-server.on("error", (error) => console.log(`Error en servidor ${error}`));
