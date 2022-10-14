@@ -2,32 +2,18 @@ export const home = (req, res) => {
 	res.render("home");
 };
 
-export const getLogin = (req, res) => {
+export const getSignin = (req, res) => {
 	if (req.isAuthenticated()) {
 		const { username } = req.user;
 		res.render("home", { username });
-	} else res.render("login");
+	} else res.render("signin");
 };
 
-export const postLogin = (req, res) => {
-	const { username } = req.user;
-	res.render("postLogin", { username });
-};
+export const postSingin = (req, res) => res.redirect("/");
 
 export const getSignup = (req, res) => res.render("signup");
 
-export const postSignup = (req, res) => {
-	const { email, password, firstName, lastName, address, age, phone, image } =
-		req.body;
-	const response = {
-		email,
-		password,
-		firstName,
-		lastName,
-		address,
-		age,
-		phone,
-		image,
-	};
-	res.json({ response });
+export const getLogout = (req, res) => {
+	req.logout();
+	res.redirect("/");
 };

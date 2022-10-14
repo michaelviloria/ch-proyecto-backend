@@ -6,7 +6,10 @@ dotenv.config();
 const PORT = process.env.PORT || 8080;
 
 const server = app.listen(PORT, async () => {
-	await mongoose.connect(process.env.MONGO_CONNECT);
+	await mongoose
+		.connect(process.env.MONGO_CONNECT)
+		.then((db) => console.log("Base de datos conectada"))
+		.catch((err) => console.error(err));
 	console.log(`Servidor HTTP escuchando en el puerto ${server.address().port}`);
 });
 

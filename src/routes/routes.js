@@ -1,27 +1,44 @@
-import express, { Router } from "express";
+import { Router } from "express";
 import passport from "passport";
 import {
 	home,
-	getLogin,
+	getSignin,
 	getSignup,
-	postSignup,
-	postLogin,
+	postSingin,
+	getLogout,
 } from "../controllers/controllers.js";
-
+import { upload } from "../utils/upload.js";
 export const router = Router();
 
 router.get("/", home);
 
-router.get("/login", getLogin);
+router.get("/signin", getSignin);
 router.post(
-	"/login",
-	passport.authenticate("login", { failureRedirect: "/login" }),
-	postLogin
+	"/signin",
+	passport.authenticate("local-signin", {
+		failureRedirect: "/signin",
+		passReqToCallback: true,
+	}),
+	postSingin
 );
 
 router.get("/signup", getSignup);
 router.post(
 	"/signup",
-	passport.authenticate("signup", { failureRedirect: "/signup" }),
-	postSignup
+	upload.single("image"),
+	(req, res, next) => {
+		const file = req.file;
+		if (file) {
+			res.send(file);
+		} else {
+			next();
+		}
+	},
+	passport.authenticate("local-signup", {
+		successRedirect: "/",
+		failureRedirect: "/signup",
+		passReqToCallback: true,
+	})
 );
+
+router.get("/logout", getLogout);

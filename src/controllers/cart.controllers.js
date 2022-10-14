@@ -1,3 +1,9 @@
+// <------ Mongodb ------>
+
+import { cartsModel } from "../models/carts.schema.js";
+import CartMongoDB from "../dao/cartMongoDB.js";
+const cart = new CartMongoDB(cartsModel);
+
 // <----- Home ----->
 
 export const getHome = (req, res) => {

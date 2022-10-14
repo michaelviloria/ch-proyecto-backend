@@ -3,12 +3,15 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import { error404 } from "./middlewares/middlewares.js";
+import flash from "connect-flash";
 
 export const app = express();
+import * as passportAuth from "./middlewares/auth.js";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use("/imgs", express.static(`public/imgs`));
 
 // <---------- Sessions ---------->
 
@@ -18,11 +21,19 @@ app.use(
 		secret: "secret",
 		resave: false,
 		saveUninitialized: false,
+		cookie: { maxAge: 60000 * 5 },
 	})
 );
 
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use((req, res, next) => {
+	app.locals.signupMessage = req.flash("signupMessage");
+	app.locals.signinMessage = req.flash("signinMessage");
+	next();
+});
 
 // <---------- Engine Pug ---------->
 
@@ -31,13 +42,10 @@ app.set("views", "./src/views");
 
 // <---------- Routes ---------->
 
-import { routerProduct } from "./routes/products.routes.js";
-app.use("/api/productos", routerProduct);
+import { routerCart, routerProduct, router } from "./routes/index.js";
 
-import { routerCart } from "./routes/cart.routes.js";
 app.use("/api/carrito", routerCart);
-
-import { router } from "./routes/routes.js";
+app.use("/api/productos", routerProduct);
 app.use(router);
 
 // <---------- Servidor Error 404 ---------->
