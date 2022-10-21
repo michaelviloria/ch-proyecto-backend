@@ -21,7 +21,7 @@ app.use(
 		secret: "secret",
 		resave: false,
 		saveUninitialized: false,
-		cookie: { maxAge: 60000 * 5 },
+		// cookie: { maxAge: 60000 * 5 },
 	})
 );
 
@@ -30,8 +30,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
-	app.locals.signupMessage = req.flash("signupMessage");
-	app.locals.signinMessage = req.flash("signinMessage");
+	res.locals.signupMessage = req.flash("signupMessage");
+	res.locals.signinMessage = req.flash("signinMessage");
 	next();
 });
 

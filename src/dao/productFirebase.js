@@ -1,5 +1,6 @@
 import admin from "firebase-admin";
 import ServiceAccount from "../../proyecto-backend-ef2b4-firebase-adminsdk-rm655-9ebea6f677.json" assert { type: "json" };
+import { loggerError } from "../utils/logs.js";
 
 admin.initializeApp({
 	credential: admin.credential.cert(ServiceAccount),
@@ -21,7 +22,7 @@ class ProductFirebase {
 			}));
 			return result;
 		} catch (error) {
-			console.error(error);
+			loggerError.error(error);
 		}
 	}
 
@@ -32,7 +33,7 @@ class ProductFirebase {
 			const response = item.data();
 			return response;
 		} catch (error) {
-			console.error(error);
+			loggerError.error(error);
 		}
 	}
 
@@ -46,7 +47,7 @@ class ProductFirebase {
 			await doc.create(product);
 			return product;
 		} catch (error) {
-			console.error(error);
+			loggerError.error(error);
 		}
 	}
 
@@ -58,7 +59,7 @@ class ProductFirebase {
 			const item = await doc.update(product);
 			return { product: product, item: item };
 		} catch (error) {
-			console.error(error);
+			loggerError.error(error);
 		}
 	}
 
@@ -69,7 +70,7 @@ class ProductFirebase {
 			const item = await doc.delete();
 			return deleted;
 		} catch (error) {
-			console.error(error);
+			loggerError.error(error);
 		}
 	}
 }

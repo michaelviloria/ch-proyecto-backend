@@ -1,8 +1,8 @@
+// <------ Modules ------>
 import { Router } from "express";
 export const routerCart = Router();
 
-// <------ Queries ------>
-
+// <------ Controllers ------>
 import {
 	deleteHome,
 	deleteProductById,
@@ -13,7 +13,6 @@ import {
 } from "../controllers/cart.controllers.js";
 
 // <------ Queries ------>
-
 routerCart.get("/", getHome);
 routerCart.post("/", postHome);
 routerCart.delete("/:id", deleteHome);

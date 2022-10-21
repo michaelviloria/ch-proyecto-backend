@@ -28,9 +28,10 @@ passport.use(
 				newUser.address = req.body.address;
 				newUser.age = req.body.age;
 				newUser.phone = req.body.phone;
+				newUser.image = req.file.filename;
 
 				await newUser.save();
-				done(null, newUser);
+				return done(null, newUser);
 			}
 		}
 	)

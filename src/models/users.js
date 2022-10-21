@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
 	address: { type: String, required: true },
 	age: { type: Number, required: true },
 	phone: { type: Number, required: true },
+	image: { type: String, required: true },
 });
 
 userSchema.methods.encryptPassword = (password) => {

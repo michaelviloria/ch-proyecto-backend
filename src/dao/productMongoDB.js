@@ -1,3 +1,5 @@
+import { loggerError } from "../utils/logs.js";
+
 class ProductMongoDB {
 	constructor(schema) {
 		this.schema = schema;
@@ -37,7 +39,7 @@ class ProductMongoDB {
 	async update(id, product) {
 		const data = await this.getAll();
 		if (id <= 0 || id > data.length) {
-			return console.log(
+			return loggerError.error(
 				"El producto con el id especificado no ha sido encontrado."
 			);
 		} else {
@@ -60,7 +62,7 @@ class ProductMongoDB {
 	async delete(id) {
 		const data = await this.getAll();
 		if (id <= 0 || id > data.length) {
-			return console.log(
+			return loggerError.error(
 				"El producto con el id especificado no ha sido encontrado."
 			);
 		} else {

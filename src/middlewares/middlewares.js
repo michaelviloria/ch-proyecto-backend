@@ -25,10 +25,13 @@ export const admin = {
 	},
 };
 
-export const isAuthenticated = (req, res, next) => {
-	if (req.isAuthenticated()) {
-		return next();
+export const uploadFile = (req, res, next) => {
+	const file = req.file;
+	if (file) {
+		next();
 	} else {
-		res.redirect("/");
+		res.send("No has subido ningun archivo <a href='/signup'>Registrarse</a>");
 	}
 };
+
+export const userLogged = (req, res, next) => {};

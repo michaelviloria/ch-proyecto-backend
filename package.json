@@ -3,7 +3,7 @@
 	"name": "ch-proyecto-backend",
 	"version": "1.0.0",
 	"description": "Proyecto del curso 'Programación Backend' en CoderHouse",
-	"main": "server.js",
+	"main": "index.js",
 	"scripts": {
 		"dev": "nodemon index.js",
 		"start": "node index.js",
@@ -26,10 +26,14 @@
 		"dotenv": "^16.0.3",
 		"express": "^4.18.1",
 		"express-session": "^1.17.3",
+		"intl-tel-input": "^17.0.19",
+		"log4js": "^6.7.0",
 		"mongoose": "^6.5.2",
 		"multer": "^1.4.5-lts.1",
+		"nodemailer": "^6.8.0",
 		"passport": "^0.6.0",
 		"passport-local": "^1.0.0",
-		"pug": "^3.0.2"
+		"pug": "^3.0.2",
+		"twilio": "^3.82.2"
 	}
 }
