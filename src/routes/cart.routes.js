@@ -1,22 +1,19 @@
-// <------ Modules ------>
 import { Router } from "express";
-export const routerCart = Router();
+import { CartController } from "../controllers/index.js";
+import { userLogged } from "../middlewares/index.js";
 
-// <------ Controllers ------>
-import {
-	deleteHome,
-	deleteProductById,
-	getHome,
-	getProductsById,
-	postHome,
-	postProductsById,
-} from "../controllers/cart.controllers.js";
+export class CartRoutes {
+	constructor() {
+		this.controller = new CartController();
+	}
 
-// <------ Queries ------>
-routerCart.get("/", getHome);
-routerCart.post("/", postHome);
-routerCart.delete("/:id", deleteHome);
+	start() {
+		const router = Router();
 
-routerCart.get("/:id/productos", getProductsById);
-routerCart.post("/:id/productos", postProductsById);
-routerCart.delete("/:id/productos/:id_prod", deleteProductById);
+		router.get("/", userLogged, this.controller.getAllCarts);
+		router.get("/:id", userLogged, this.controller.getCartById);
+		router.post("/", userLogged, this.controller.addCart);
+		router.put("/:id", userLogged, this.controller.updateCartById);
+		router.delete("/:id", userLogged, this.controller.deletecartById);
+	}
+}

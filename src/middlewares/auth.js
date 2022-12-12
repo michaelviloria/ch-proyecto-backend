@@ -1,66 +1,57 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { User } from "../models/users.js";
+import bcrypt from "bcrypt";
+import { User } from "../models/user.model.js";
+import { logError } from "../utils/logs.js";
+
+const isValidPassword = (user, password) =>
+	bcrypt.compareSync(password, user.password);
+const createHash = (password) =>
+	bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
 
 passport.use(
-	"local-signup",
+	"login",
 	new LocalStrategy(
 		{
 			usernameField: "email",
 			passwordField: "password",
-			passReqToCallback: true,
 		},
-		async (req, email, password, done) => {
-			const userExists = await User.findOne({ email });
+		async (email, password, done) => {
+			try {
+				const user = await User.findOne({ email });
+				if (!user) return done(null, false, { message: "User not found" });
 
-			if (userExists) {
-				return done(
-					null,
-					false,
-					req.flash("signupMessage", "El correo electronico ya esta en uso.")
-				);
-			} else {
-				const newUser = new User();
-				newUser.email = email;
-				newUser.password = newUser.encryptPassword(password);
-				newUser.name.first = req.body.firstname;
-				newUser.name.last = req.body.lastname;
-				newUser.address = req.body.address;
-				newUser.age = req.body.age;
-				newUser.phone = req.body.phone;
-				newUser.image = req.file.filename;
+				const validate = isValidPassword(user, password);
+				if (!validate) return done(null, false, { message: "Wrong password" });
 
-				await newUser.save();
-				return done(null, newUser);
+				return done(null, user, { message: "Login succesfull" });
+			} catch (error) {
+				return done(error);
 			}
 		}
 	)
 );
 
 passport.use(
-	"local-signin",
+	"register",
 	new LocalStrategy(
 		{
+			passReqToCallback: true,
 			usernameField: "email",
 			passwordField: "password",
-			passReqToCallback: true,
 		},
 		async (req, email, password, done) => {
-			const user = await User.findOne({ email });
-			if (!user) {
-				return done(
-					null,
-					false,
-					req.flash("signinMessage", "Usuario no encontrado.")
-				);
-			} else if (!user.comparePassword(password)) {
-				return done(
-					null,
-					false,
-					req.flash("signinMessage", "Contraseña incorrecta.")
-				);
-			} else {
+			try {
+				const user = await User.create({
+					email,
+					password: createHash(password),
+					firstname: req.body.firstname,
+					lastname: req.body.lastname,
+					phone: req.body.phone,
+				});
 				return done(null, user);
+			} catch (error) {
+				return done(error);
 			}
 		}
 	)

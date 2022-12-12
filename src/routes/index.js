@@ -1,5 +1,7 @@
-import { routerCart } from "./cart.routes.js";
-import { routerProduct } from "./products.routes.js";
-import { router } from "./routes.js";
+import { AppRoutes } from "./app.routes.js";
+import { ProductRoutes } from "./product.routes.js";
+import { CartRoutes } from "./cart.routes.js";
+import { MessageRoutes } from "./message.routes.js";
+import { OrderRoutes } from "./order.routes.js";
 
-export { routerCart, routerProduct, router };
+export { AppRoutes, ProductRoutes, CartRoutes, MessageRoutes, OrderRoutes };
