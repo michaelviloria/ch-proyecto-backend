@@ -18,7 +18,7 @@ export async function mailing(mail, subject, html) {
 
 	let info = await transporter.sendMail({
 		from: config.MAIL_FROM,
-		to: (await mail) || config.MAIL_TO,
+		to: (await mail),
 		subject: await subject,
 		html: await html,
 	});

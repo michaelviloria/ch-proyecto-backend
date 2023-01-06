@@ -85,7 +85,7 @@ io.on("connection", (socket) => {
 
 // ? <-------------------- Server -------------------->
 const server = app.listen(config.PORT, async () => {
-	await mongoose.connect(config.connect_db);
+	await mongoose.connect(config.DATABASE);
 	logInfo.info(
 		`Servidor HTTP escuchando en el puerto ${server.address().port}`
 	);
