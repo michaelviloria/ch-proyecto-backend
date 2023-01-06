@@ -2,7 +2,6 @@ import { OrderService } from "../service/index.js";
 
 export class OrderController {
 	constructor() {
-		this.dto = new OrderDto();
 		this.service = new OrderService();
 	}
 

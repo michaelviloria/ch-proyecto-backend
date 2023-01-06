@@ -1,7 +1,11 @@
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 dotenv.config({
-	path: `./${process.argv[2]}.env`,
+	path: `src/config/${process.argv[2]}.env`,
 });
+
+console.log(process.argv[2]);
+console.log(process.env.NODE_ENV);
+console.log(process.env.DATABASE);
 
 export const config = {
 	NODE_ENV: process.env.NODE_ENV || "development",

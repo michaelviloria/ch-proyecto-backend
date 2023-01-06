@@ -12,8 +12,10 @@ export class CartRoutes {
 
 		router.get("/", userLogged, this.controller.getAllCarts);
 		router.get("/:id", userLogged, this.controller.getCartById);
-		router.post("/", userLogged, this.controller.addCart);
+		router.post("/", userLogged, this.controller.addNewCart);
 		router.put("/:id", userLogged, this.controller.updateCartById);
 		router.delete("/:id", userLogged, this.controller.deletecartById);
+
+		return router;
 	}
 }

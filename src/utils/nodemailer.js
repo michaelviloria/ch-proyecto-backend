@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import { logInfo } from "./logs.js";
-const config = require("../config/index.js");
+import { config } from "../config/index.js";
 
 export async function mailing(mail, subject, html) {
 	let transporter = nodemailer.createTransport({

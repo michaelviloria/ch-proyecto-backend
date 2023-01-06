@@ -14,5 +14,7 @@ export class OrderRoutes {
 		router.get("/:id", userLogged, this.controller.getOrderById);
 		router.post("/", userLogged, this.controller.addNewOrder);
 		router.delete("/", userLogged, this.controller.deleteOrderById);
+
+		return router;
 	}
 }

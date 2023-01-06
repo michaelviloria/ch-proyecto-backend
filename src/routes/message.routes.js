@@ -12,6 +12,8 @@ export class MessageRoutes {
 
 		router.get("/", userLogged, this.controller.getAllMessages);
 		router.get("/:email", userLogged, this.controller.getUserMessage);
-		router.post("/", userLogged, this.controller.addMessage)
+		router.post("/", userLogged, this.controller.addMessage);
+
+		return router;
 	}
 }
